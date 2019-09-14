@@ -28,19 +28,19 @@ public class PlayerController : MonoBehaviour
 
     void CCMove()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             cc.Move(transform.forward * playerSpeed);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             cc.Move(-transform.forward * playerSpeed);
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             cc.transform.Rotate(0f, -playerRotate, 0f);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             cc.transform.Rotate(0f, playerRotate, 0f);
         }
@@ -48,9 +48,9 @@ public class PlayerController : MonoBehaviour
         cc.Move(-transform.up * gravity);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.tag == "Respawn")
+        if (other.gameObject.tag == "Respawn")
         {
             Debug.Log("Triggered!");
         }
