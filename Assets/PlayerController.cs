@@ -6,8 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     CharacterController cc;
 
-    [Range(0.1f, 1)]
     public float playerSpeed;
+    [Range(0.1f, 1)]
+    public float walkSpeed;
+    [Range(0.1f, 1)]
+    public float runSpeed;
     [Range(1, 5)]
     public float playerRotate = 1;
     [Range(0.1f, 1)]
@@ -46,6 +49,15 @@ public class PlayerController : MonoBehaviour
         }
 
         cc.Move(-transform.up * gravity);
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            playerSpeed = runSpeed;
+        }
+        else
+        {
+            playerSpeed = walkSpeed;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
