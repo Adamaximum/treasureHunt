@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    GameManager gm;
+
     CharacterController cc;
 
     public float playerSpeed;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         cc = GetComponent<CharacterController>();
     }
 
@@ -62,9 +65,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Respawn")
+        if (other.gameObject.tag == "BodyPart")
         {
-            Debug.Log("Triggered!");
+            other.gameObject.SetActive(false);
+            gm.BPCount++;
+            Debug.Log("Body Parts Found: "+gm.BPCount);
+
+            if (other.gameObject.name == "BP1")
+            {
+                gm.BP1Active = false;
+            }
+            if (other.gameObject.name == "BP2")
+            {
+                gm.BP2Active = false;
+            }
+            if (other.gameObject.name == "BP3")
+            {
+                gm.BP3Active = false;
+            }
         }
     }
 
