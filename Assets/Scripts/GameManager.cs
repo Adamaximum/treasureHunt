@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public bool BP2Active = true;
     public bool BP3Active = true;
 
+    public bool blastOff;
+
     public TextMeshProUGUI LeftUIText;
     public TextMeshProUGUI RightUIText;
 
@@ -20,6 +22,9 @@ public class GameManager : MonoBehaviour
     public Transform BP2TR;
     public Transform BP3TR;
     public Transform spaceshipTR;
+
+    public Camera mainCam;
+    public Camera statCam;
 
     // Start is called before the first frame update
     void Start()
@@ -32,13 +37,28 @@ public class GameManager : MonoBehaviour
         BP2TR = GameObject.Find("BP2").GetComponent<Transform>();
         BP3TR = GameObject.Find("BP3").GetComponent<Transform>();
         spaceshipTR = GameObject.Find("Spaceship").GetComponent<Transform>();
+
+        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        statCam = GameObject.Find("Static Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        NavigationGuide();
-        RightUIText.text = "Body Parts Found: " + BPCount;
+        if (blastOff == false)
+        {
+            NavigationGuide();
+            RightUIText.text = "Body Parts Found: " + BPCount;
+            mainCam.gameObject.SetActive(true);
+            statCam.gameObject.SetActive(false);
+        }
+        else
+        {
+            mainCam.gameObject.SetActive(false);
+            statCam.gameObject.SetActive(true);
+            LeftUIText.text = "Congratulations!";
+            RightUIText.text = "You've escaped with all your body parts!";
+        }
     }
 
     void NavigationGuide()
@@ -75,7 +95,7 @@ public class GameManager : MonoBehaviour
             LeftUIText.text = "Press Space to Blast Off!";
             if (Input.GetKeyDown(KeyCode.Space))
             {
-
+                blastOff = true;
             }
         }
     }
