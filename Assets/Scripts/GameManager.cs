@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -23,8 +23,15 @@ public class GameManager : MonoBehaviour
     public Transform BP3TR;
     public Transform spaceshipTR;
 
+    public GameObject BP1;
+    public GameObject BP2;
+    public GameObject BP3;
+
     public Camera mainCam;
     public Camera statCam;
+
+    public GameObject realPlayer;
+    public GameObject propPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +52,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (BP1Active == false)
+        {
+            BP1.SetActive(true);
+        }
+        if (BP2Active == false)
+        {
+            BP2.SetActive(true);
+        }
+        if (BP3Active == false)
+        {
+            BP3.SetActive(true);
+        }
+
         if (blastOff == false)
         {
             NavigationGuide();
@@ -56,8 +76,16 @@ public class GameManager : MonoBehaviour
         {
             mainCam.gameObject.SetActive(false);
             statCam.gameObject.SetActive(true);
-            LeftUIText.text = "Congratulations!";
-            RightUIText.text = "You've escaped with all your body parts!";
+            LeftUIText.text = "Congratulations!\nYou've escaped with all your body parts!";
+            RightUIText.text = "Press R to Play Again.";
+
+            realPlayer.SetActive(false);
+            propPlayer.SetActive(true);
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("scene1");
+            }
         }
     }
 
